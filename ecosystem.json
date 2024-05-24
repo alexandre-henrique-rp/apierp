@@ -1,0 +1,11 @@
+{
+  "apps": [
+    {
+      "name": "apierp",
+      "script": "yarn",
+      "args": "start",
+      "autorestart": true,
+      "watch": true
+    }
+  ]
+}

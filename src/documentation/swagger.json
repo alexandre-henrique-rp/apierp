@@ -1,0 +1,129 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Open API integration with ERP",
+    "description": "Essa api tem como objetivo de integrar as informaçoes dos clientes pertecente a um sistemas ERP, aqgilizando o atendimemto para certificação, urlbase: https://api.redebrasilrp.com.br/v1",
+    "contact": {
+      "nome": "Alexandre Henrique (Tec Lider)",
+      "tel": "1633254134",
+      "email": "suporte@redebrasilrp.com.br"
+    },
+    "version": "1.0.1"
+  },
+  "servers": [
+    {
+      "url": "https://api.redebrasilrp.com.br/v1"
+    }
+  ],
+  "paths": {
+    "/register/{authorization}": {
+      "post": {
+        "summary": "Solicitação de certificado",
+        "description": "Esta rota é responsavel para solicitar o cretificado para o cliennte",
+        "tags": ["Register"],
+        "parameters": [
+          {
+            "name": "auauthorization",
+            "in": "path",
+            "description": "codgo autorizador",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Register"
+              },
+              "examples": {
+                "types": {
+                  "value": {
+                    "nome": "string",
+                    "cpf": "string (sem pontos, traços ou espaços)",
+                    "cnpj": "string (sem pontos, traços ou espaços)",
+                    "email": "string",
+                    "telefone": "string (sem pontos, traços ou espaços)",
+                    "telefone2": "string (sem pontos, traços ou espaços)",
+                    "vencimento": "string",
+                    "valor_venda": "number (ex: 100.00)"
+                  }
+                },
+                "product": {
+                  "value": {
+                    "nome": "Rodrigo Aparecido de Souza",
+                    "cpf": "12345678999",
+                    "cnpj": "12345678000190",
+                    "email": "rodrigo@gmail.com",
+                    "telefone": "12345678912",
+                    "telefone2": "12345678912",
+                    "vencimento": "30/05/2022"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "201": {
+            "description": "successfully registered customer, within 1 hour we will contact you"
+          }
+        }
+      }
+    },
+    "/check/valid/{cnpj}": {
+      "get": {
+        "summary": "Get da data de Vencimento do certificado do client",
+        "description": "Esta rota é responsavel para solicitar a data de vencimento o cretificado para o cliennte",
+        "tags": ["Request"],
+        "parameters": [
+          {
+            "name": "cnpj",
+            "in": "path",
+            "description": "cnpj do cliente",
+            "required": true
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "200": {
+            "description": "successfully"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Register": {
+        "type": "object",
+        "properties": {
+          "nome": { "type": "string" },
+          "cpf": { "type": "string" },
+          "cnpj": { "type": "string" },
+          "email": { "type": "string" },
+          "telefone": { "type": "string" },
+          "telefone2": { "type": "string" },
+          "vencimento": { "type": "string" },
+          "valor_venda": { "type": "float" }
+        }
+      }
+    }
+  }
+}
