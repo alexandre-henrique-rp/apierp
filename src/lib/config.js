@@ -24,7 +24,7 @@ export default async function Config(data, erp) {
 
     const tipocert = !data.cpf && data.cnpj ? "A1PJ" : data.cpf && data.cnpj ? "A1PJ" : data.cpf && !data.cnpj ? "A1PF" : "";
     const valor = tipocert === "A1PJ" ? uni.a1pj : uni.a1pf;
-    const valorFinal = !data.valor_venda ? uni.val_venda : !uni.val_venda? valor : data.valor_venda
+    const valorFinal = !data.valor_venda && !uni.val_venda ? valor : !data.valor_venda && !!uni.val_venda ? uni.val_venda : data.valor_venda
     const comicao = !uni.repasse ? "0,00" : `${uni.repasse}`;
 
     const NomeClientFinal = normalizeString(data.nome);
